@@ -1,0 +1,286 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom right, #fff0f5, #ffe0e6);
+  color: #69364c;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 95%;
+  max-width: 1200px;
+  background-color: #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  overflow: hidden;
+  animation: fadeIn 1.5s ease;
+}
+
+.navbar {
+  background-color: #fff0f7;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #ffcadb;
+}
+
+.logo {
+  font-family: 'Great Vibes', cursive;
+  font-size: 32px;
+  color: #d64d80;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #a2486a;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #d64d80;
+}
+
+.main-content {
+  padding: 40px 30px;
+  text-align: center;
+  background: #fffafc;
+}
+
+.welcome-card {
+  max-width: 700px;
+  margin: 0 auto;
+  animation: slideIn 1.2s ease;
+}
+
+.welcome-card h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 42px;
+  color: #c2185b;
+  margin-bottom: 20px;
+}
+
+.welcome-card p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #6d3d5b;
+}
+
+.btn {
+  background-color: #f6a5c0;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #e06389;
+  box-shadow: 0 0 15px #ffc1d4, 0 0 25px #ffc1d4;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #fce4ec;
+  font-size: 14px;
+  color: #9c4275;
+}
+
+/* Home Image Section */
+.home-image {
+  margin: 40px auto;
+  animation: fadeIn 1.2s ease;
+}
+
+.home-image img {
+  width: 100%;
+  max-width: 1100px;
+  border-radius: 20px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+}
+
+/* Gallery */
+.gallery {
+  padding: 40px 20px;
+  animation: fadeIn 1s ease;
+}
+
+.gallery h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 36px;
+  color: #d63384;
+  margin-bottom: 20px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Modal for Gallery Image */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(255, 240, 245, 0.95);
+  animation: fadeIn 0.4s ease;
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(230, 145, 175, 0.3);
+  animation: zoomIn 0.4s ease;
+}
+
+.close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  color: #d64d80;
+  font-size: 36px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #b8355f;
+}
+
+/* Love Letter Modal */
+.letter-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 235, 245, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.5s ease;
+}
+
+.letter-content {
+  background: linear-gradient(to bottom right, #fce5ec, #f8bcd0);
+  padding: 40px;
+  max-width: 600px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  text-align: center;
+  position: relative;
+  animation: zoomIn 0.4s ease;
+}
+
+.letter-content h2 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 36px;
+  color: #c0396d;
+  margin-bottom: 20px;
+}
+
+.letter-content p {
+  font-family: 'Great Vibes', cursive;
+  font-size: 24px;
+  color: #944b6d;
+  line-height: 1.8;
+}
+
+.letter-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 32px;
+  color: #c03f69;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.letter-close:hover {
+  color: #ad1457;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .welcome-card h1 {
+    font-size: 32px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .letter-content p {
+    font-size: 20px;
+  }
+}

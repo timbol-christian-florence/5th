@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>5th Anniversary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #fff0f5, #fce4ec);
+      color: #6d3d5b;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .hidden { display: none !important; }
+    .fade-in { animation: fadeIn 0.8s ease; }
+    .welcome-screen {
+      text-align: center;
+      animation: fadeIn 1.5s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .welcome-screen h1, .welcome-screen h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 48px;
+      color: #c2185b;
+      margin-bottom: 20px;
+    }
+    .btn {
+      background-color: #f48fb1;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .btn:hover {
+      background-color: #ec407a;
+      box-shadow: 0 0 15px #ff99cc, 0 0 25px #ff99cc;
+    }
+    .btn:hover::after {
+      content: '💖';
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      animation: floatHeart 1s ease forwards;
+    }
+    @keyframes floatHeart {
+      0% { opacity: 0; transform: translateY(0) scale(0.5); }
+      100% { opacity: 1; transform: translateY(-30px) scale(1.2); }
+    }
+    @keyframes floatHeartEmoji {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-800px) scale(1.5); opacity: 0; }
+    }
+    .main-ui {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      animation: fadeIn 1.5s ease forwards;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ffe3ed;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #f8bbd0;
+      z-index: 999;
+    }
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .nav-left { flex: 1; }
+    .nav-center {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex: 2;
+    }
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      padding-left: 0;
+      margin: 0;
+    }
+    .navbar a {
+      text-decoration: none;
+      color: #a64d79;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+    .navbar a:hover { color: #d63384; }
+    .section {
+      padding: 100px 40px 40px;
+      background: #fffafc;
+      border-radius: 20px;
+      margin-top: 100px;
+      text-align: center;
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+    .section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 36px;
+      color: #d63384;
+      margin-bottom: 20px;
+    }
+    #gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+    }
+    .countdown {
+      background: #ffe4ec;
+      padding: 20px;
+      border-radius: 20px;
+      margin: 30px auto;
+      max-width: 400px;
+      font-size: 20px;
+      color: #c2185b;
+      box-shadow: 0 0 15px rgba(255, 192, 203, 0.4);
+    }
+    canvas#heartCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <audio id="bg-music" loop>
+    <source src="Forevermore (Remix).mp3" type="audio/mpeg">
+  </audio>
+  <canvas id="heartCanvas"></canvas>
+  <div class="welcome-screen" id="welcomeScreen">
+    <h1>Happy 5th Anniversary, yeob! 💖</h1>
+    <h2>I Love You So Much! 💖</h2>
+    <button class="btn" onclick="startExperience()">Click to kilig</button>
+  </div>
+  <div class="main-ui" id="mainUI">
+    <div class="navbar">
+      <div class="nav-wrapper">
+        <div class="nav-left">
+          <a onclick="goBackToWelcome()">← Back</a>
+        </div>
+        <div class="nav-center">
+          <ul>
+            <li><a onclick="showSection('home')">Home</a></li>
+            <li><a onclick="showSection('gallery')">Gallery</a></li>
+            <li><a onclick="showSection('messages')">Messages</a></li>
+            <li><a onclick="showSection('profile')">Profile</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="section active" id="home">
+      <h2>Home 🏠</h2>
+      <div class="countdown" id="countdownBox">
+        Anniversary in <span id="daysLeft"></span> days 💘
+      </div>
+    </div>
+    <div class="section" id="gallery">
+      <h2>Gallery 📸</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: center;">
+        <div style="text-align: center; max-width: 250px;">
+          <img src="city cafee.jpg" alt="city cafee" style="border-radius: 12px; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.3s ease;">
+          <p style="margin-top: 8px; font-size: 14px; color: #a64d79;"><strong>Feb 14, 2023</strong><br>We met at City Café and talked for hours.</p>
+        </div>
+        <div style="text-align: center; max-width: 250px;">
+          <img src="1st photobooth.jpg" alt="1st Photobooth" style="border-radius: 12px; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.3s ease;">
+          <p style="margin-top: 8px; font-size: 14px; color: #a64d79;"><strong>Mar 8, 2023</strong><br>Our first photobooth picture together!</p>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="messages">
+      <h2>Love Letter 💌</h2>
+      <p style="font-family: 'Great Vibes', cursive; font-size: 24px; color: #a64d79;">
+        My Dearest Love,<br><br>
+        Since the day our paths crossed, my world has been filled with light and warmth.<br>
+        Your smile is the sunrise to my soul, and your laugh the music in my heart.<br>
+        No matter where life takes us, you'll always be my favorite place to return to.<br><br>
+        With all my love, always and forever. 💖<br><br>
+        — Yours truly
+      </p>
+    </div>
+    <div class="section" id="profile">
+      <h2>Profile 🧑‍💼</h2>
+      <p>Update your information and customize your romantic dashboard.</p>
+    </div>
+  </div>
+  <script>
+    function startExperience() {
+      document.getElementById('welcomeScreen').style.display = 'none';
+      document.getElementById('mainUI').style.display = 'flex';
+      showSection('home');
+      const bgMusic = document.getElementById('bg-music');
+      if (bgMusic) bgMusic.play().catch(err => console.log('Music play error:', err));
+
+      // Confetti burst
+      confetti({ particleCount: 100, spread: 90, origin: { y: 0.6 }, colors: ['#ff69b4', '#ffc0cb', '#ffb6c1', '#db7093'] });
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          confetti({
+            particleCount: 50,
+            spread: 70,
+            angle: Math.random() * 360,
+            origin: { x: Math.random(), y: Math.random() * 0.6 },
+            colors: ['#ff69b4', '#ff1493', '#ffe4e1']
+          });
+        }, i * 300);
+      }
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.textContent = '💖';
+        heart.style.position = 'fixed';
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.bottom = '-40px';
+        heart.style.fontSize = `${Math.random() * 24 + 24}px`;
+        heart.style.animation = `floatHeartEmoji ${Math.random() * 3 + 3}s ease-out forwards`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }
+    }
+    function showSection(sectionId) {
+      document.querySelectorAll('.section').forEach(sec => {
+        sec.classList.remove('active');
+        sec.style.display = 'none';
+      });
+      const target = document.getElementById(sectionId);
+      target.style.display = 'block';
+      setTimeout(() => target.classList.add('active'), 10);
+    }
+    function goBackToWelcome() {
+      document.getElementById('mainUI').style.display = 'none';
+      document.getElementById('welcomeScreen').style.display = 'flex';
+    }
+    const canvas = document.getElementById('heartCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let hearts = [];
+    function random(min, max) { return Math.random() * (max - min) + min; }
+    function createHeart() {
+      return { x: random(0, canvas.width), y: canvas.height + 20, size: random(10, 30), speed: random(1, 2), color: `rgba(255,105,180, ${random(0.3, 0.8)})` };
+    }
+    function drawHeart(h) {
+      ctx.beginPath();
+      ctx.moveTo(h.x, h.y);
+      ctx.bezierCurveTo(h.x - h.size / 2, h.y - h.size / 2, h.x - h.size, h.y + h.size / 3, h.x, h.y + h.size);
+      ctx.bezierCurveTo(h.x + h.size, h.y + h.size / 3, h.x + h.size / 2, h.y - h.size / 2, h.x, h.y);
+      ctx.fillStyle = h.color;
+      ctx.fill();
+    }
+    function animateHearts() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hearts = hearts.filter(h => h.y + h.size > 0);
+      while (hearts.length < 30) hearts.push(createHeart());
+      hearts.forEach(h => { h.y -= h.speed; drawHeart(h); });
+      requestAnimationFrame(animateHearts);
+    }
+    animateHearts();
+
+    const anniversaryDate = new Date('2025-07-05');
+    const today = new Date();
+    const oneDay = 1000 * 60 * 60 * 24;
+    const daysLeft = Math.ceil((anniversaryDate - today) / oneDay);
+    document.getElementById('daysLeft').textContent = daysLeft > 0 ? daysLeft : 'Today! 💕';
+
+    // Heart trail
+    document.addEventListener('mousemove', function(e) {
+      const heart = document.createElement('div');
+      heart.textContent = '💖';
+      heart.style.position = 'absolute';
+      heart.style.left = (e.pageX - 10) + 'px';
+      heart.style.top = (e.pageY - 10) + 'px';
+      heart.style.pointerEvents = 'none';
+      heart.style.fontSize = '16px';
+      heart.style.opacity = 1;
+      heart.style.transition = 'transform 1s ease, opacity 1s ease';
+      document.body.appendChild(heart);
+      setTimeout(() => {
+        heart.style.transform = 'translateY(-40px) scale(1.5)';
+        heart.style.opacity = 0;
+      }, 0);
+      setTimeout(() => heart.remove(), 1000);
+    });
+  </script>
+</body>
+</html>
